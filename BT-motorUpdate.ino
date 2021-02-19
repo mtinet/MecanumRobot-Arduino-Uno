@@ -1,4 +1,3 @@
-
 #include "FaBoPWM_PCA9685.h"
 
 //#include "servo.hpp"
@@ -50,7 +49,8 @@ int MIN_VALUE = 300;
 #define MAX_PWM   2000
 #define MIN_PWM   300
 
-int Motor_PWM = 1900;
+int Motor_PWM = 2000;
+int AI_PWM = 1200;
  
 //控制电机运动    宏定义
 //    ↑A-----B↑   
@@ -88,8 +88,8 @@ void LEFT_1()
 //    ↑C-----D↓
 void LEFT_2()
 {
-  MOTORA_FORWARD(Motor_PWM);MOTORB_FORWARD(Motor_PWM);
-  MOTORC_BACKOFF(Motor_PWM);MOTORD_BACKOFF(Motor_PWM);
+  MOTORA_FORWARD(AI_PWM);MOTORB_FORWARD(AI_PWM);
+  MOTORC_BACKOFF(AI_PWM);MOTORD_BACKOFF(AI_PWM);
 }
 //    ↓A-----B=   
 //     | ↙   |
@@ -115,8 +115,8 @@ void RIGHT_1()
 //    ↓C-----D↑
 void RIGHT_2()
 {
-  MOTORA_BACKOFF(Motor_PWM);MOTORB_BACKOFF(Motor_PWM);
-  MOTORC_FORWARD(Motor_PWM);MOTORD_FORWARD(Motor_PWM);
+  MOTORA_BACKOFF(AI_PWM);MOTORB_BACKOFF(AI_PWM);
+  MOTORC_FORWARD(AI_PWM);MOTORD_FORWARD(AI_PWM);
 }
 //    =A-----B↓   
 //     |   ↘ |
@@ -167,20 +167,20 @@ void UART_Control()
   }
   switch(Uart_Date)
   {
-     case 'A':  ADVANCE(500,500,500,500);  M_LOG("Forward!\r\n");        break;
-     case 'B':  RIGHT_1();  M_LOG("Right up!\r\n");     break;
-     case 'C':  rotate_2(); M_LOG("CCW!\r\n");          break;      
-     case 'D':  RIGHT_3();  M_LOG("Right down!\r\n");   break;
-     case 'E':  BACK();     M_LOG("Backward!\r\n");          break;
-     case 'F':  LEFT_3();   M_LOG("Left down!\r\n");    break;
-     case 'G':  rotate_1(); M_LOG("CW!\r\n");           break;         
-     case 'H':  LEFT_1();   M_LOG("Left up!\r\n");     break;
-     case 'Z':  STOP();     M_LOG("Stop!\r\n");        break;
-     case 'z':  STOP();     M_LOG("Stop!\r\n");        break;
+     case 'w':  ADVANCE(500,500,500,500);  M_LOG("Forward!\r\n");        break;
+     case 'q':  RIGHT_1();  M_LOG("Right up!\r\n");     break;
+     case 'D':  rotate_2(); M_LOG("CCW!\r\n");          break;      
+     case 'z':  RIGHT_3();  M_LOG("Right down!\r\n");   break;
+     case 'x':  BACK();     M_LOG("Backward!\r\n");          break;
+     case 'c':  LEFT_3();   M_LOG("Left down!\r\n");    break;
+     case 'A':  rotate_1(); M_LOG("CW!\r\n");           break;         
+     case 'e':  LEFT_1();   M_LOG("Left up!\r\n");     break;
+     case 'S':  STOP();     M_LOG("Stop!\r\n");        break;
+     case 's':  STOP();     M_LOG("Stop!\r\n");        break;
      case 'd':  LEFT_2();   M_LOG("Left!\r\n");        break;
-     case 'b':  RIGHT_2();  M_LOG("Right!\r\n");        break;
-     case 'L':  Motor_PWM = 1500;  M_LOG("Speed Up!\r\n");    break;
-     case 'M':  Motor_PWM = 500;   M_LOG("Speed Down!\r\n");  break;
+     case 'a':  RIGHT_2();  M_LOG("Right!\r\n");        break;
+     case 'L':  Motor_PWM = 2000; AI_PWM = 2000; M_LOG("Speed Up!\r\n");    break;
+     case 'M':  Motor_PWM = 1000; AI_PWM = 1500;  M_LOG("Speed Down!\r\n");  break;
    }
 }
 
