@@ -47,10 +47,10 @@ int MIN_VALUE = 300;
 
 //PWM参数
 #define MAX_PWM   2000
-#define MIN_PWM   300
+#define MIN_PWM   400
 
-int Motor_PWM = 2000;
-int AI_PWM = 1200;
+int Motor_PWM = 600;
+int LR_PWM = 750;
  
 //控制电机运动    宏定义
 //    ↑A-----B↑   
@@ -88,8 +88,8 @@ void LEFT_1()
 //    ↑C-----D↓
 void LEFT_2()
 {
-  MOTORA_FORWARD(AI_PWM);MOTORB_FORWARD(AI_PWM);
-  MOTORC_BACKOFF(AI_PWM);MOTORD_BACKOFF(AI_PWM);
+  MOTORA_FORWARD(LR_PWM);MOTORB_FORWARD(LR_PWM);
+  MOTORC_BACKOFF(LR_PWM);MOTORD_BACKOFF(LR_PWM);
 }
 //    ↓A-----B=   
 //     | ↙   |
@@ -115,8 +115,8 @@ void RIGHT_1()
 //    ↓C-----D↑
 void RIGHT_2()
 {
-  MOTORA_BACKOFF(AI_PWM);MOTORB_BACKOFF(AI_PWM);
-  MOTORC_FORWARD(AI_PWM);MOTORD_FORWARD(AI_PWM);
+  MOTORA_BACKOFF(LR_PWM);MOTORB_BACKOFF(LR_PWM);
+  MOTORC_FORWARD(LR_PWM);MOTORD_FORWARD(LR_PWM);
 }
 //    =A-----B↓   
 //     |   ↘ |
@@ -179,8 +179,8 @@ void UART_Control()
      case 's':  STOP();     M_LOG("Stop!\r\n");        break;
      case 'a':  LEFT_2();   M_LOG("Left!\r\n");        break;
      case 'd':  RIGHT_2();  M_LOG("Right!\r\n");        break;
-     case 'L':  Motor_PWM = 2000; AI_PWM = 2000; M_LOG("Speed Up!\r\n");    break;
-     case 'M':  Motor_PWM = 1000; AI_PWM = 1500;  M_LOG("Speed Down!\r\n");  break;
+     case 'L':  Motor_PWM = 2000; LR_PWM = 2000; M_LOG("Speed Up!\r\n");    break;
+     case 'M':  Motor_PWM = 600; LR_PWM = 750; M_LOG("Speed Down!\r\n");  break;
    }
 }
 
