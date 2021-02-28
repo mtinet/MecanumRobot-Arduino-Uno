@@ -179,8 +179,24 @@ void UART_Control()
      case 's':  STOP();     M_LOG("Stop!\r\n");        break;
      case 'a':  LEFT_2();   M_LOG("Left!\r\n");        break;
      case 'd':  RIGHT_2();  M_LOG("Right!\r\n");        break;
-     case 'L':  Motor_PWM = 2000; LR_PWM = 2000; M_LOG("Speed Up!\r\n");    break;
-     case 'M':  Motor_PWM = 600; LR_PWM = 750; M_LOG("Speed Down!\r\n");  break;
+     case 'L':  Motor_PWM = 2000;  LR_PWM = 2000; M_LOG("Speed Up!\r\n");    break;
+     case 'M':  Motor_PWM = 600;   LR_PWM = 750; M_LOG("Speed Down!\r\n");  break;
+     case 'o':  Motor_PWM -= 100;   LR_PWM -= 100;  M_LOG("Speed Down!\r\n");   
+        if(Motor_PWM < 400) {
+          Motor_PWM = 400;
+        }
+        if(LR_PWM < 550) {
+          LR_PWM = 550;
+        }
+        Serial.print(Motor_PWM);  Serial.print("  "); Serial.println(LR_PWM);    break;
+     case 'p':  Motor_PWM += 100;   LR_PWM += 100;  M_LOG("Speed Up!\r\n");    
+        if(Motor_PWM > 1800) {
+          Motor_PWM = 1800;
+        }
+        if(LR_PWM > 1950) {
+          LR_PWM = 1950;
+        }
+        Serial.print(Motor_PWM);  Serial.print("  "); Serial.println(LR_PWM);    break;
    }
 }
 
