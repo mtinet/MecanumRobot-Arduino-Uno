@@ -49,8 +49,9 @@ int MIN_VALUE = 300;
 #define MAX_PWM   2000
 #define MIN_PWM   400
 
-int Motor_PWM = 600;
-int LR_PWM = 750;
+int Motor_PWM = 500;
+int LR_PWM = 800;
+int rotation_PWM = 600;
  
 //控制电机运动    宏定义
 //    ↑A-----B↑   
@@ -134,8 +135,8 @@ void RIGHT_3()
 //    ↑C-----D↓
 void rotate_1()  //tate_1(uint8_t pwm_A,uint8_t pwm_B,uint8_t pwm_C,uint8_t pwm_D) 
 {
-  MOTORA_BACKOFF(Motor_PWM);MOTORB_BACKOFF(Motor_PWM);
-  MOTORC_BACKOFF(Motor_PWM);MOTORD_BACKOFF(Motor_PWM);
+  MOTORA_BACKOFF(rotation_PWM);MOTORB_BACKOFF(rotation_PWM);
+  MOTORC_BACKOFF(rotation_PWM);MOTORD_BACKOFF(rotation_PWM);
 }
 
 //    ↓A-----B↑   
@@ -144,8 +145,8 @@ void rotate_1()  //tate_1(uint8_t pwm_A,uint8_t pwm_B,uint8_t pwm_C,uint8_t pwm_
 //    ↓C-----D↑
 void rotate_2()  // rotate_2(uint8_t pwm_A,uint8_t pwm_B,uint8_t pwm_C,uint8_t pwm_D)
 {
-  MOTORA_FORWARD(Motor_PWM);MOTORB_FORWARD(Motor_PWM);
-  MOTORC_FORWARD(Motor_PWM);MOTORD_FORWARD(Motor_PWM);
+  MOTORA_FORWARD(rotation_PWM);MOTORB_FORWARD(rotation_PWM);
+  MOTORC_FORWARD(rotation_PWM);MOTORD_FORWARD(rotation_PWM);
 }
 //    =A-----B=  
 //     |  =  |
@@ -180,21 +181,21 @@ void UART_Control()
      case 'a':  LEFT_2();   M_LOG("Left!\r\n");        break;
      case 'd':  RIGHT_2();  M_LOG("Right!\r\n");        break;
      case 'L':  Motor_PWM = 2000;  LR_PWM = 2000; M_LOG("Speed Up!\r\n");    break;
-     case 'M':  Motor_PWM = 600;   LR_PWM = 750; M_LOG("Speed Down!\r\n");  break;
+     case 'M':  Motor_PWM = 500;   LR_PWM = 1000; M_LOG("Speed Down!\r\n");  break;
      case 'o':  Motor_PWM -= 100;   LR_PWM -= 100;  M_LOG("Speed Down!\r\n");   
-        if(Motor_PWM < 400) {
-          Motor_PWM = 400;
+        if(Motor_PWM < 500) {
+          Motor_PWM = 500;
         }
-        if(LR_PWM < 550) {
-          LR_PWM = 550;
+        if(LR_PWM < 800) {
+          LR_PWM = 800;
         }
         Serial.print(Motor_PWM);  Serial.print("  "); Serial.println(LR_PWM);    break;
      case 'p':  Motor_PWM += 100;   LR_PWM += 100;  M_LOG("Speed Up!\r\n");    
-        if(Motor_PWM > 1800) {
-          Motor_PWM = 1800;
+        if(Motor_PWM > 1700) {
+          Motor_PWM = 1700;
         }
-        if(LR_PWM > 1950) {
-          LR_PWM = 1950;
+        if(LR_PWM > 2000) {
+          LR_PWM = 2000;
         }
         Serial.print(Motor_PWM);  Serial.print("  "); Serial.println(LR_PWM);    break;
    }
